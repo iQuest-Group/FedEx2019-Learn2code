@@ -1,5 +1,6 @@
 package com.iquestgroup.l2c.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ServicePool {
 			implementations.get(feature).add(implementation);
 			return;
 		}
-		implementations.put(feature, Arrays.asList(implementation));
+		implementations.put(feature, new ArrayList<>(Arrays.asList(implementation)));
 	}
 
 	public void registerServiceImpl(Feature feature, Object instance) {
