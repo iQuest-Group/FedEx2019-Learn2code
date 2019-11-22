@@ -5,6 +5,14 @@ body {
   min-height: 100%;
 }
 
+.stat-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(8rem, 1fr))[auto-fill];
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  grid-auto-rows: 1fr;
+}
+
 .grid {
   display: -ms-grid;
   display: grid;
@@ -13,7 +21,8 @@ body {
   grid-auto-rows: 1fr;
 }
 
-.grid::before {
+.grid::before,
+.stat-grid::before {
   content: "";
   width: 0;
   padding-bottom: 100%;
@@ -23,7 +32,8 @@ body {
   grid-column: 1 / 1;
 }
 
-.grid > *:first-child {
+.grid > *:first-child,
+.stat-grid > *:first-child {
   -ms-grid-row: 1;
   grid-row: 1 / 1;
   -ms-grid-column: 1;
@@ -31,7 +41,8 @@ body {
 }
 
 /* Just to make the grid visible */
-.grid > * {
+.grid > *,
+.stat-grid > * {
   border: 1px white solid;
 }
 
@@ -64,4 +75,11 @@ body {
 
 .selector {
   background: #343A40;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }

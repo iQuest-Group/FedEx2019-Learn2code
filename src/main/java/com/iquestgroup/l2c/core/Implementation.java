@@ -1,11 +1,16 @@
 package com.iquestgroup.l2c.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.UUID;
 
 public class Implementation {
-	
+
+	@JsonIgnore
 	private final Object instance;
-	
+
+	@JsonInclude
 	private final Class<? extends Object> type;
 	
 	private final String owner;

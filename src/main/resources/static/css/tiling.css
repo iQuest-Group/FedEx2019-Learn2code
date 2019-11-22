@@ -31,3 +31,18 @@
   font-family: "Roboto", sans-serif;
   font-size: 20px;
 }
+
+.centered-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  font-size: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.active-devices{
+  font-size: 14px;
+}
