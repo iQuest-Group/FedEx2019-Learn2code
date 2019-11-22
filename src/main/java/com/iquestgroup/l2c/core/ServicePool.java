@@ -13,6 +13,8 @@ public class ServicePool {
 	
 	private Map<Feature, List<Implementation>> implementations = new HashMap<>();
 	
+	private Map<Feature, Implementation> activeImplementations = new HashMap<>();
+	
 	public void registerServiceImpl(Feature feature, Implementation implementation) {
 		if (implementations.containsKey(feature)) {
 			implementations.get(feature).add(implementation);
@@ -28,5 +30,13 @@ public class ServicePool {
 	
 	public Optional<List<Implementation>> getServiceImplementationsForFeature(Feature feature) {
 		return Optional.ofNullable(implementations.get(feature));
+	}
+	
+	public void setActiveImplementation(Feature feature, Implementation implementation) {
+		activeImplementations.put(feature, implementation);
+	}
+	
+	Implementation getActiveImplementationForFeature(Feature feature) {
+		return activeImplementations.get(feature);
 	}
 }

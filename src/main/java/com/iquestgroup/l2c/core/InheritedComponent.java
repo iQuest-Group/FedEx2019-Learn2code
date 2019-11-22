@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Inherited
+@Component
 public @interface InheritedComponent {
 
-	Component component() default @Component;
 }

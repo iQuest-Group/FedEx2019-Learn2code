@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +40,15 @@ public class ImplementationConroller {
 	public List<Implementation> getImplementations(@PathVariable("featureId") Integer featureId) {
 		return servicePool.getServiceImplementationsForFeature(com.iquestgroup.l2c.core.Feature.findById(featureId.intValue()))
 				.orElse(Collections.emptyList());
+	}
+	
+	@PostMapping(path = "/switchto", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String switchImplementation(@RequestBody SwitchImplementationRequest switchImplementationRequest) {
+		Implementation implementation = getImplementations(switchImplementationRequest.getFeatureId())
+				.stream().filter((request) -> request.getUuid().equals(switchImplementationRequest.getUuid()))
+					.findAny()
+					.orElseThrow(() -> new RuntimeException("Invalid implementation UUID."));
+		servicePool.setActiveImplementation(com.iquestgroup.l2c.core.Feature.findById(switchImplementationRequest.getFeatureId().intValue()), implementation);
+		return "OK";
 	}
 }

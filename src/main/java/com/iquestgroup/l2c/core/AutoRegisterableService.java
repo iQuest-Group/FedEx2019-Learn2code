@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+@InheritedComponent
 public abstract class AutoRegisterableService {
 
 	@Autowired

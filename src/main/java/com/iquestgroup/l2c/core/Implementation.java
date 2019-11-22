@@ -1,5 +1,7 @@
 package com.iquestgroup.l2c.core;
 
+import java.util.UUID;
+
 public class Implementation {
 	
 	private final Object instance;
@@ -11,6 +13,8 @@ public class Implementation {
 	private final String description;
 	
 	private final String version;
+	
+	private final String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 
 	public Implementation(Object instance, Class<? extends Object> type) {
 		if (!isClassAnnotated(type)) {
@@ -50,5 +54,9 @@ public class Implementation {
 
 	public String getVersion() {
 		return version;
+	}
+
+	public String getUuid() {
+		return uuid;
 	}
 }
