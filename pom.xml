@@ -15,7 +15,7 @@
 	<description>FedEx day Learn to code</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 		<bootstrap.version>4.3.1</bootstrap.version>
 		<jquery.version>3.4.1</jquery.version>
 		<locator.version>0.30</locator.version>
