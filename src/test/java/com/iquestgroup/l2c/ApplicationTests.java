@@ -1,10 +1,10 @@
-package com.example.c8ytest;
+package com.iquestgroup.l2c;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class C8ytestApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
