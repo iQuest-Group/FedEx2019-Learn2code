@@ -23,7 +23,7 @@ public interface DeviceRepository {
    * @param id the ID to retrieve the device by
    * @return the
    */
-  Optional<Device> findById(long id);
+  Optional<Device> findById(Long id);
 
   /**
    * Removes the given {@link Device}.

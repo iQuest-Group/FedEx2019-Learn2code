@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Device {
 
-  private long id;
+  private Long id;
 
-  private String brand;
+  private String brand = "";
 
-  private String model;
+  private String model = "";
 
-  private String firmwareVersion;
+  private String firmwareVersion = "";
 
-  private SourceType sourceType;
+  private SourceType sourceType = SourceType.OS;
 }

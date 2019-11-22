@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-public class InMemoryDeviceRepositoryTest {
+public class SerializationDeviceRepositoryTest {
 
   @Autowired
   private DeviceRepository deviceRepository;
@@ -61,10 +61,10 @@ public class InMemoryDeviceRepositoryTest {
   }
 
   @TestConfiguration
-  static class InMemoryRepositoryTestConfiguration {
+  static class SerializationRepositoryTestConfiguration {
     @Bean
     public DeviceRepository deviceRepository() {
-      return new InMemoryDeviceRepository();
+      return new SerializationDeviceRepository();
     }
   }
 }

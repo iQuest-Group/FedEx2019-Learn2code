@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -27,15 +28,17 @@ public class InMemoryDeviceRepository implements DeviceRepository {
       throw new IllegalArgumentException("Device must not be null!");
     }
 
-    device.setId(RANDOM.nextLong());
+    if (device.getId() == null) {
+      device.setId(RANDOM.nextLong());
+    }
     devices.add(device);
     return device;
   }
 
   @Override
-  public Optional<Device> findById(long id) {
+  public Optional<Device> findById(Long id) {
     return devices.stream()
-        .filter(device -> id == device.getId())
+        .filter(device -> Objects.equals(id, device.getId()))
         .findFirst();
   }
 

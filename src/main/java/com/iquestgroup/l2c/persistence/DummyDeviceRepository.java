@@ -12,7 +12,7 @@ public class DummyDeviceRepository implements DeviceRepository {
   }
 
   @Override
-  public Optional<Device> findById(long id) {
+  public Optional<Device> findById(Long id) {
     return Optional.empty();
   }
 
