@@ -1,30 +1,31 @@
-package com.iquestgroup.l2c.persistence.example;
+package com.iquestgroup.l2c.persistence.impl;
 
+import com.iquestgroup.l2c.core.AutoRegisterableService;
+import com.iquestgroup.l2c.core.Feature;
+import com.iquestgroup.l2c.core.RegistrableService;
 import com.iquestgroup.l2c.event.SourceType;
 import com.iquestgroup.l2c.model.Device;
 import com.iquestgroup.l2c.persistence.DeviceRepository;
 
-import org.springframework.stereotype.Repository;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Scanner;
 
-@Repository
-public class SerializationDeviceRepository implements DeviceRepository {
+@RegistrableService(owner = "User", description = "Serialization", version = "1", feature = Feature.PERSISTENCE)
+public class SerializationDeviceRepository extends AutoRegisterableService implements DeviceRepository {
 
   private static final Random RANDOM = new Random();
 
   private static final String DEVICES_FILE_NAME = "devices.txt";
+
+  public SerializationDeviceRepository() {
+    super(Feature.PERSISTENCE);
+  }
 
   @Override
   public Device save(Device device) {
@@ -48,16 +49,16 @@ public class SerializationDeviceRepository implements DeviceRepository {
 
   @Override
   public Optional<Device> findById(Long id) {
-    try (Scanner scanner = new Scanner(new File(DEVICES_FILE_NAME))) {
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
+    try (BufferedReader reader = new BufferedReader(new FileReader(DEVICES_FILE_NAME))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
         Device device = parseDevice(line);
 
         if (Objects.equals(device.getId(), id)) {
           return Optional.of(device);
         }
       }
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       return Optional.empty();
     }
     return Optional.empty();
@@ -66,6 +67,7 @@ public class SerializationDeviceRepository implements DeviceRepository {
   private Device parseDevice(String line) {
     Device device = new Device();
 
+    // TODO refactor this !
     int startSeparatorIndex = 0;
     int endSeparatorIndex = 1;
     startSeparatorIndex = line.indexOf('=', startSeparatorIndex);
@@ -96,12 +98,6 @@ public class SerializationDeviceRepository implements DeviceRepository {
     if (device == null) {
       throw new IllegalArgumentException("Device must not be null!");
     }
-//
-//    try (BufferedReader reader = new BufferedReader(new FileReader(DEVICES_FILE_NAME)), BufferedWriter wr) {
-//
-//
-//
-//
-//    }
+    // TODO implement this !
   }
 }

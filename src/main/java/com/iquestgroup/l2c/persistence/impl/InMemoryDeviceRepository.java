@@ -1,9 +1,10 @@
-package com.iquestgroup.l2c.persistence.example;
+package com.iquestgroup.l2c.persistence.impl;
 
+import com.iquestgroup.l2c.core.AutoRegisterableService;
+import com.iquestgroup.l2c.core.Feature;
+import com.iquestgroup.l2c.core.RegistrableService;
 import com.iquestgroup.l2c.model.Device;
 import com.iquestgroup.l2c.persistence.DeviceRepository;
-
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,14 +12,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-@Repository
-public class InMemoryDeviceRepository implements DeviceRepository {
+@RegistrableService(owner = "User", description = "InMemory", version = "1", feature = Feature.PERSISTENCE)
+public class InMemoryDeviceRepository extends AutoRegisterableService implements DeviceRepository {
 
   private static final Random RANDOM = new Random();
 
   private final Collection<Device> devices;
 
   public InMemoryDeviceRepository() {
+    super(Feature.PERSISTENCE);
     devices = new ArrayList<>();
   }
 

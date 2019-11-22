@@ -1,9 +1,10 @@
-package com.iquestgroup.l2c.persistence.example;
+package com.iquestgroup.l2c.persistence.impl;
 
 import com.iquestgroup.l2c.model.Device;
 import com.iquestgroup.l2c.persistence.DeviceRepository;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+@Disabled
 @ExtendWith(SpringExtension.class)
-public class InMemoryDeviceRepositoryTest {
+public class SerializationDeviceRepositoryTest {
 
   @Autowired
   private DeviceRepository deviceRepository;
@@ -61,10 +63,10 @@ public class InMemoryDeviceRepositoryTest {
   }
 
   @TestConfiguration
-  static class InMemoryRepositoryTestConfiguration {
+  static class SerializationRepositoryTestConfiguration {
     @Bean
     public DeviceRepository deviceRepository() {
-      return new InMemoryDeviceRepository();
+      return new SerializationDeviceRepository();
     }
   }
 }
