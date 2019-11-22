@@ -22,6 +22,7 @@
 		<lombok.version>1.18.10</lombok.version>
 		<font-awesome.version>5.11.2</font-awesome.version>
 		<popper.js.version>1.16.0</popper.js.version>
+		<chart.js.version>2.9.3</chart.js.version>
 	</properties>
 
 	<dependencies>
@@ -73,6 +74,12 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>font-awesome</artifactId>
 			<version>${font-awesome.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>chart.js</artifactId>
+			<version>${chart.js.version}</version>
 		</dependency>
 
 		<dependency>

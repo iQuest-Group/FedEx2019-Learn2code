@@ -19,7 +19,7 @@ import com.iquestgroup.l2c.core.ServicePool;
 
 @RestController
 @RequestMapping(value = "/api/implementations")
-public class ImplementationConroller {
+public class ImplementationController {
 	
 	@Autowired
 	private ServicePool servicePool;

@@ -1,33 +1,165 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Learn to Code</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
 
-  <title>Spring Boot Thymeleaf Hello World Example</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/tiling.css}" type="text/css"/>
 
-  <link rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 
+    <script src="/js/selecting.js"></script>
 </head>
-
 <body>
+<div id="wrapper">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <h2>L2C</h2>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="active">
+                <a href="/dashboard"><i class="fa fa-home"></i>Dashboard</a>
+            </li>
+            <li>
+                <a href="/config"><i class="fa fa-cog"></i>Config</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-plug"></i>Plugins</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-user"></i>Users</a>
+            </li>
+        </ul>
+    </aside>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="#">iquestgroup.com</a>
-</nav>
+    <div id="navbar-wrapper">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand" id="sidebar-toggle"
+                    ><i class="fa fa-bars"></i
+                    ></a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-<main role="main" class="container">
+    <section id="content-wrapper">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Device Id</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Details</th>
+                <th scope="col">Type</th>
+                <th scope="col">Device Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event, iterStatus: ${events}">
+                <th scope="row" th:text="${event.getEventId()}"></th>
+                <td th:text="${event.getDeviceId()}"></td>
+                <td th:text="${#temporals.format(event.getTimestamp(), 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${event.getDetails()}"></td>
+                <td th:text="${event.getDeviceEventType()}"></td>
+                <td th:text="${event.getSourceType()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row justify-content-between">
+            <div class="column-view col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <select id ="brand-selector" name="brand-selector" onchange="updateModels(value)">
+                            <option value=""> -- </option>
+                            <option th:each="brand : ${brands}"
+                                    th:value="${brand}"
+                                    th:utext="${brand}"></option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <select id ="model-selector" name="model-selector" onmousedown="this.value='';" onchange="updateChart(value);">
+                            <option value=""> -- </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <canvas id="firmwareDistributionChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+            <div class="column-view col-sm">
+                One of three columns
+            </div>
+        </div>
+        <div id="dashboard-grid" class="grid">
+            <div class="btn-danger">
+                <div class="padded-text">
+                    <div class="service-name">stuff</div>
+                    <div class="service-address">stuff</div>
+                    <div class="service-dashboard bottom-align">
+                        sss
+                    </div>
+                </div>
+            </div>
+            <div class="btn-danger">
+                <div class="padded-text">
+                    <div class="service-name">stuff</div>
+                    <div class="service-address">stuff</div>
+                    <div class="service-dashboard bottom-align">
+                        sss
+                    </div>
+                </div>
+            </div>
+            <div class="btn-danger">
+                <div class="padded-text">
+                    <div class="service-name">stuff</div>
+                    <div class="service-address">stuff</div>
+                    <div class="service-dashboard bottom-align">
+                        sss
+                    </div>
+                </div>
+            </div>
+            <div class="btn-danger">
+                <div class="padded-text">
+                    <div class="service-name">stuff</div>
+                    <div class="service-address">stuff</div>
+                    <div class="service-dashboard bottom-align">
+                        sss
+                    </div>
+                </div>
+            </div>
+            <div class="btn-danger">
+                <div class="padded-text">
+                    <div class="service-name">stuff</div>
+                    <div class="service-address">stuff</div>
+                    <div class="service-dashboard bottom-align">
+                        sss
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 
-  <div class="starter-template">
-    <h1>Spring Boot Web Thymeleaf Example</h1>
-    <h2>
-      <span th:text="'Hello, ' + ${message}"></span>
-    </h2>
-  </div>
-</main>
-<!-- /.container -->
-
-<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/chart.js/dist/Chart.min.js}"></script>
+<script>
+    $("#sidebar-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+<!--<script src="static/js/rerenderer.js"></script>-->
+<!--<script src="static/js/tiling.js"></script>-->
 </body>
 </html>
