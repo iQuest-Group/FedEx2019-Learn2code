@@ -15,12 +15,13 @@
 	<description>FedEx day Learn to code</description>
 
 	<properties>
-		<java.version>8</java.version>
+		<java.version>11</java.version>
 		<bootstrap.version>4.3.1</bootstrap.version>
 		<jquery.version>3.4.1</jquery.version>
-		<locator.version>0.30</locator.version>
+		<locator.version>0.38</locator.version>
 		<lombok.version>1.18.10</lombok.version>
 		<font-awesome.version>5.11.2</font-awesome.version>
+		<popper.js.version>1.16.0</popper.js.version>
 	</properties>
 
 	<dependencies>
@@ -60,6 +61,12 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>${jquery.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>popper.js</artifactId>
+			<version>${popper.js.version}</version>
 		</dependency>
 
 		<dependency>
