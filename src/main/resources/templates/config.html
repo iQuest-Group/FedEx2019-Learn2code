@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Learn to Code</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/tiling.css}" type="text/css"/>
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+
+    <script src="/js/config.js"></script>
+</head>
+<body>
+    <div class="row padded-text justify-content-md-center" th:each="feature: ${featuresMapping}">
+        <div class="column-view col-2" th:text="${feature.getKey().getName()}">
+        </div>
+        <div class="column-view col-2">
+            <select id ="impl-selector" name="impl-selector" onmousedown="this.value='';" onchange="updateImpl(value);" th:each="impl: ${feature.getValue()}">
+                <option value=""> -- </option>
+                <option th:value="${impl}" th:text="${impl}"></option>
+            </select>
+        </div>
+    </div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

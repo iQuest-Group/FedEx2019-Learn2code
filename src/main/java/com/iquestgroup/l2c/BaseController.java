@@ -20,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
-public class TestController {
+public class BaseController {
     // inject via application.properties
     @Value("${welcome.message}")
     private String message;
@@ -45,7 +45,7 @@ public class TestController {
         model.addAttribute("devices", devices);
         model.addAttribute("brands", getBrands());
 
-        return "index"; //view
+        return "base"; //view
     }
 
     @ResponseBody
