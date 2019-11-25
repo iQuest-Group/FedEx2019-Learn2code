@@ -17,6 +17,7 @@ public class DummyDeviceRepository extends AutoRegisterableService implements De
 
   @Override
   public Device save(Device device) {
+    device.setId(0L);
     return device;
   }
 
@@ -27,6 +28,11 @@ public class DummyDeviceRepository extends AutoRegisterableService implements De
 
   @Override
   public void delete(Device device) {
+    //empty
+  }
+
+  @Override
+  public void delete(Long id) {
     //empty
   }
 }

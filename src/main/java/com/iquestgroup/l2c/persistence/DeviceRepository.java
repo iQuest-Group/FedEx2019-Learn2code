@@ -31,4 +31,11 @@ public interface DeviceRepository {
    * @param device the device to remove
    */
   void delete(Device device);
+
+  /**
+   * Removes the {@link Device} with the given id.
+   *
+   * @param id the id of the device to remove
+   */
+  void delete(Long id);
 }

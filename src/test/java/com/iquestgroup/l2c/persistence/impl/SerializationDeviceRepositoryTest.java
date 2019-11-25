@@ -47,7 +47,7 @@ public class SerializationDeviceRepositoryTest {
 
   @Test
   public void testNullDeviceCannotBeDeleted() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> deviceRepository.delete(null));
+    Assertions.assertThrows(IllegalArgumentException.class, () -> deviceRepository.delete((Device) null));
   }
 
   @Test

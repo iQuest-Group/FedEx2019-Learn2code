@@ -52,4 +52,14 @@ public class InMemoryDeviceRepository extends AutoRegisterableService implements
 
     devices.remove(device);
   }
+
+  @Override
+  public void delete(Long id) {
+    Optional<Device> toRemove = findById(id);
+    if (toRemove.isEmpty()) {
+      return;
+    }
+
+    devices.remove(toRemove.get());
+  }
 }

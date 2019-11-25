@@ -100,4 +100,9 @@ public class SerializationDeviceRepository extends AutoRegisterableService imple
     }
     // TODO implement this !
   }
+
+  @Override
+  public void delete(Long id) {
+    // TODO implement this !
+  }
 }
