@@ -12,9 +12,12 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RegistrableService(owner = "User", description = "Serialization", version = "1", feature = Feature.PERSISTENCE)
 public class SerializationDeviceRepository extends AutoRegisterableService implements DeviceRepository {
@@ -22,6 +25,8 @@ public class SerializationDeviceRepository extends AutoRegisterableService imple
   private static final Random RANDOM = new Random();
 
   private static final String DEVICES_FILE_NAME = "devices.txt";
+
+  private static final Path DEVICES_PATH = Path.of(System.getProperty("user.dir")).getParent().resolve(DEVICES_FILE_NAME);
 
   public SerializationDeviceRepository() {
     super(Feature.PERSISTENCE);
@@ -37,7 +42,7 @@ public class SerializationDeviceRepository extends AutoRegisterableService imple
       device.setId(RANDOM.nextLong());
     }
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEVICES_FILE_NAME, true))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEVICES_PATH.toFile(), true))) {
       writer.write(device.toString());
       writer.newLine();
     } catch (IOException e) {
@@ -49,7 +54,7 @@ public class SerializationDeviceRepository extends AutoRegisterableService imple
 
   @Override
   public Optional<Device> findById(Long id) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(DEVICES_FILE_NAME))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(DEVICES_PATH.toFile()))) {
       String line;
       while ((line = reader.readLine()) != null) {
         Device device = parseDevice(line);
@@ -65,30 +70,23 @@ public class SerializationDeviceRepository extends AutoRegisterableService imple
   }
 
   private Device parseDevice(String line) {
+    Pattern pattern = Pattern.compile("Device\\((,* *(id=(?<id>.+?)|brand=(?<brand>.+?)|model=(?<model>.+?)|firmwareVersion=(?<firmwareVersion>.+?)|sourceType=(?<sourceType>.+?)))+\\)");
+    Matcher matcher = pattern.matcher(line);
+    matcher.find();
+
+    String id = matcher.group("id");
+    String brand = matcher.group("brand");
+    String model = matcher.group("model");
+    String firmwareVersion = matcher.group("firmwareVersion");
+    String sourceType = matcher.group("sourceType");
+
     Device device = new Device();
 
-    // TODO refactor this !
-    int startSeparatorIndex = 0;
-    int endSeparatorIndex = 1;
-    startSeparatorIndex = line.indexOf('=', startSeparatorIndex);
-    endSeparatorIndex = line.indexOf(',', endSeparatorIndex);
-    device.setId(Long.parseLong(line.substring(startSeparatorIndex + 1, endSeparatorIndex)));
-
-    startSeparatorIndex = line.indexOf('=', startSeparatorIndex + 1);
-    endSeparatorIndex = line.indexOf(',', endSeparatorIndex + 1);
-    device.setBrand(line.substring(startSeparatorIndex + 1, endSeparatorIndex));
-
-    startSeparatorIndex = line.indexOf('=', startSeparatorIndex + 1);
-    endSeparatorIndex = line.indexOf(',', endSeparatorIndex + 1);
-    device.setModel(line.substring(startSeparatorIndex + 1, endSeparatorIndex));
-
-    startSeparatorIndex = line.indexOf('=', startSeparatorIndex + 1);
-    endSeparatorIndex = line.indexOf(',', endSeparatorIndex + 1);
-    device.setFirmwareVersion(line.substring(startSeparatorIndex + 1, endSeparatorIndex));
-
-    startSeparatorIndex = line.indexOf('=', startSeparatorIndex + 1);
-    endSeparatorIndex = line.length() - 1;
-    device.setSourceType(SourceType.valueOf(line.substring(startSeparatorIndex + 1, endSeparatorIndex)));
+    device.setId(Long.parseLong(id));
+    device.setBrand(brand);
+    device.setModel(model);
+    device.setFirmwareVersion(firmwareVersion);
+    device.setSourceType(SourceType.valueOf(sourceType));
 
     return device;
   }
