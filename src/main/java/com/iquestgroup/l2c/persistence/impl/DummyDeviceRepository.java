@@ -6,6 +6,8 @@ import com.iquestgroup.l2c.core.RegistrableService;
 import com.iquestgroup.l2c.model.Device;
 import com.iquestgroup.l2c.persistence.DeviceRepository;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RegistrableService(owner = "User", description = "Dummy", version = "1", feature = Feature.PERSISTENCE)
@@ -27,12 +29,17 @@ public class DummyDeviceRepository extends AutoRegisterableService implements De
   }
 
   @Override
+  public List<Device> findAll() {
+    return Collections.emptyList();
+  }
+
+  @Override
   public void delete(Device device) {
     //empty
   }
 
   @Override
-  public void delete(Long id) {
+  public void deleteById(Long id) {
     //empty
   }
 }

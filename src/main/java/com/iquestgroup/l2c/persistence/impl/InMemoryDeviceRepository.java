@@ -8,6 +8,7 @@ import com.iquestgroup.l2c.persistence.DeviceRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
@@ -45,6 +46,11 @@ public class InMemoryDeviceRepository extends AutoRegisterableService implements
   }
 
   @Override
+  public List<Device> findAll() {
+    return new ArrayList<>(devices);
+  }
+
+  @Override
   public void delete(Device device) {
     if (device == null) {
       throw new IllegalArgumentException("Device must not be null!");
@@ -54,12 +60,12 @@ public class InMemoryDeviceRepository extends AutoRegisterableService implements
   }
 
   @Override
-  public void delete(Long id) {
+  public void deleteById(Long id) {
     Optional<Device> toRemove = findById(id);
     if (toRemove.isEmpty()) {
       return;
     }
 
-    devices.remove(toRemove.get());
+    delete(toRemove.get());
   }
 }

@@ -2,6 +2,7 @@ package com.iquestgroup.l2c.persistence;
 
 import com.iquestgroup.l2c.model.Device;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,6 +15,7 @@ public interface DeviceRepository {
    *
    * @param device the device to save
    * @return the saved entity
+   * @throws IllegalArgumentException if the given device is {@code null}
    */
   Device save(Device device);
 
@@ -21,14 +23,22 @@ public interface DeviceRepository {
    * Retrieves a {@link Device} given its ID.
    *
    * @param id the ID to retrieve the device by
-   * @return the
+   * @return an optional wrapper containing the device, if found, or empty otherwise
    */
   Optional<Device> findById(Long id);
+
+  /**
+   * Retrieves all {@link Device} entities.
+   *
+   * @return all device entities or empty if no device exists
+   */
+  List<Device> findAll();
 
   /**
    * Removes the given {@link Device}.
    *
    * @param device the device to remove
+   * @throws IllegalArgumentException if the given device is {@code null}
    */
   void delete(Device device);
 
@@ -37,5 +47,5 @@ public interface DeviceRepository {
    *
    * @param id the id of the device to remove
    */
-  void delete(Long id);
+  void deleteById(Long id);
 }

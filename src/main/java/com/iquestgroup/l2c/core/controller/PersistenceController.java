@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,11 +27,11 @@ public class PersistenceController {
   @Autowired
   private ActiveServicesFactory activeServicesFactory;
 
-  @PostMapping(value = "/save")
+  @PostMapping("/save")
   @ResponseBody
   public String save(@RequestParam String brand,
                      @RequestParam String model,
-                     @RequestParam(required = false) String firmwareVersion) {
+                     @RequestParam(required = false, defaultValue = "") String firmwareVersion) {
     DeviceRepository deviceRepository = activeServicesFactory.getActiveImplementationInstanceForFeature(Feature.PERSISTENCE);
     Device device = new Device(null, brand, model, firmwareVersion, SourceType.OS);
 
@@ -38,8 +39,15 @@ public class PersistenceController {
     return device.getId().toString();
   }
 
-  @GetMapping(value = "/get/{id}")
+  @GetMapping("/get")
   @ResponseBody
+  public String get() {
+    DeviceRepository deviceRepository = activeServicesFactory.getActiveImplementationInstanceForFeature(Feature.PERSISTENCE);
+    List<Device> devices = deviceRepository.findAll();
+    return devices.toString();
+  }
+
+  @GetMapping("/get/{id}")
   public ResponseEntity<String> get(@PathVariable long id) {
     DeviceRepository deviceRepository = activeServicesFactory.getActiveImplementationInstanceForFeature(Feature.PERSISTENCE);
     Optional<Device> foundDevice = deviceRepository.findById(id);
@@ -49,9 +57,9 @@ public class PersistenceController {
     return ResponseEntity.notFound().build();
   }
 
-  @PutMapping(value = "/delete/{id}")
+  @PutMapping("/delete/{id}")
   public void delete(@PathVariable long id) {
     DeviceRepository deviceRepository = activeServicesFactory.getActiveImplementationInstanceForFeature(Feature.PERSISTENCE);
-    deviceRepository.delete(id);
+    deviceRepository.deleteById(id);
   }
 }
